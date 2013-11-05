@@ -1,0 +1,3 @@
+#NJ Counties in TopoJSON
+The NJ County Boundaries converted to TopoJSON for use in web mapping/interactive visualization methods. Not for use at RF scales greater than 1:500,000. Counties have been simplified to produce a slim dataset of 60 arcs and only 743 points. This produces a file that is under 10kb in size. 
+Each county polygon contains an ID that matches the NJ numeric ID for each county. The county name is also recorded as a property of each polygon.
