@@ -15,6 +15,8 @@ Information on how to use Tableau to create dashboards like this will be availab
 * [NJ DEP Bureau of GIS - 2012 Land Use/Land Cover Update](http://www.nj.gov/dep/gis/lulc12.html)
 * [Rowan University: Changing Landscapes in the Garden State](http://gis.rowan.edu/projects/luc/)
 * [Rutgers University: Landscape Change Research](http://crssa.rutgers.edu/projects/lc/)
+* [Anderson Land Use Classification System](http://landcover.usgs.gov/pdf/anderson.pdf) (PDF)
+* [NJ DEP Modified Anderson System](http://www.state.nj.us/dep/gis/digidownload/metadata/lulc02/anderson2002.html) 
 
 ## Process
 
@@ -64,4 +66,22 @@ Once run for each time period, with the results in the respective child table, t
 
 Each LU data set has a different number of land use codes. Not every code is present in every dataset. For your ease in having the land use data values consistent across time periods, load the `lucrosswalk.csv` file into your database. It has every 4 digit Anderson code present in the 5 time periods, along with the description of the code and the top-level Anderson type ("URBAN", "WETLANDS", "FOREST", etc.)
 
+### View for Export into Tableau
+
+The following view definition (stored in `view_def.sql`) pulls the statistics together, calculating percentage fields for each municipality. The results can then be exported as a CSV (an export present in this repository as `landuse.csv`) for use in a visualization tool like Tableau. 
+
+```
+CREATE OR REPLACE VIEW landuse_export AS
+SELECT a.yearcode, a.muncode, m.mun, m.county
+     , a.lucode, l.ludesc, l.lutype
+     , a.acres, a.isacres
+     , (a.acres/(ST_Area(m.shape)/43560))::numeric(10,7) as pc_area
+     , (a.isacres/(ST_Area(m.shape)/43560))::numeric(10,7) as pc_isarea
+  FROM landuse_muni a
+  LEFT JOIN lucrosswalk l ON a.lucode = l.lucode
+  LEFT JOIN municipalities m ON a.muncode = m.mun_code
+;
+```
+
+The results of this process can be viewed as a [Tableau dashboard](https://public.tableau.com/profile/john.reiser#!/vizhome/NewJerseyLandUse1986-2012/LandUseStory).
 
