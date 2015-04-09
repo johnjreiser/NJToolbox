@@ -1,0 +1,18 @@
+#!/bin/sh
+### The series of commands used to load ESRI shapefiles from NJ DEP's site
+into PostGIS. Output of ogr2ogr -f PGDump is fed directly into psql. For your
+use, consider changing -lco SCHEMA to your preferred schema. 
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=ON /vsistdout/ Land_lu_2012_hu02020007.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02030101_103.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02030104.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02030105.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02040104.shp | psql -U dba -d landuse2012 -f -
+### one table, part way through had a conflict with the objectid field.
+### load this to a new table (tmp02030105), then INSERT INTO landuse2012
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln tmp02030105 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=ON /vsistdout/ Land_lu_2012_hu02030105.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02040105.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02040201.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02040202.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02040204_206.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02040301.shp | psql -U dba -d landuse2012 -f -
+ogr2ogr -f PGDump --config PG_USE_COPY YES -nln landuse2012 -nlt MULTIPOLYGON -lco PRECISION=NO -lco GEOMETRY_NAME=shape -lco FID=objectid -lco SCHEMA=public -lco SRID=3424 -lco CREATE_TABLE=OFF /vsistdout/ Land_lu_2012_hu02040302_303.shp | psql -U dba -d landuse2012 -f -
